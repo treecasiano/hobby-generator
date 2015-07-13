@@ -4,12 +4,12 @@ body {
   color: white;
   width: auto;
   padding: 50px;
-  font-size: 16px;
-  max-width: 400px;
+  font-size: 24px;
+  max-width: 600px;
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 60px;
   background: -webkit-linear-gradient(180deg, yellowgreen, orchid, turquoise, lightyellow);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -22,13 +22,13 @@ a {
     background: white;
     color: black;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 24px;
     padding: 15px;
     margin-top: 20px;
     text-align: center;
     background: -webkit-linear-gradient(180deg, yellowgreen, orchid, turquoise, lightyellow);
     border-radius: 15px;
-    min-width: 400px;
+    min-width: 600px;
     border-width: 5px;
     border-color: white;
     min-height: 150px;
