@@ -21,9 +21,15 @@ a {
 #hobbies {
     background: white;
     color: black;
+    font-weight: bold;
+    font-size: 20px;
     padding: 15px;
+    margin-top: 20px;
     text-align: center;
     background: -webkit-linear-gradient(180deg, yellowgreen, orchid, turquoise, lightyellow);
     border-radius: 15px;
-    /*box-shadow: 1px 4px 10px darkgray;*/
+    min-width: 400px;
+    border-width: 5px;
+    border-color: white;
+    min-height: 150px;
 }
