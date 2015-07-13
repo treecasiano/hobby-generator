@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var hobbyGenerator = require ('./lib/hobbies');
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
@@ -14,6 +15,7 @@ app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
-app.post('/', function (req, res) {
-    res.send('Got a POST request.');
+app.post( '/hobbies', function( req, res) {
+  var output = hobbyGenerator();
+  res.json( { hobbies: output } );
 });
