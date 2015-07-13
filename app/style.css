@@ -25,5 +25,5 @@ a {
     text-align: center;
     background: -webkit-linear-gradient(180deg, yellowgreen, orchid, turquoise, lightyellow);
     border-radius: 15px;
-    box-shadow: 1px 4px 10px darkgray;
+    /*box-shadow: 1px 4px 10px darkgray;*/
 }
