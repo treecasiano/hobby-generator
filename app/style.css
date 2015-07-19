@@ -4,7 +4,7 @@ body {
   color: white;
   width: auto;
   padding: 50px;
-  font-size: 24px;
+  font-size: 30px;
   max-width: 600px;
 }
 
@@ -15,7 +15,12 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 a {
-  color: #00B7FF;
+  color: turquoise;
+  text-decoration: none;
+}
+
+a:hover {
+  color: mediumpurple;
 }
 
 #hobbies {
@@ -32,4 +37,12 @@ a {
     border-width: 5px;
     border-color: white;
     min-height: 150px;
+}
+
+
+footer {
+  position: fixed;
+  bottom: 0;
+  font-size: 20px;
+  line-height: 4px;
 }
