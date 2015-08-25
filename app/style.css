@@ -1,11 +1,13 @@
 body {
   font-family: 'Lato', sans-serif;
   background: black;
+  margin: auto;
   color: white;
   width: auto;
   padding: 50px;
   font-size: 30px;
   max-width: 600px;
+  text-align: center;
 }
 
 h1 {
@@ -33,15 +35,14 @@ a:hover {
     text-align: center;
     background: -webkit-linear-gradient(180deg, yellowgreen, orchid, turquoise, lightyellow);
     border-radius: 15px;
-    min-width: 600px;
+    width: 80%;
     border-width: 5px;
     border-color: white;
-    min-height: 150px;
+    min-height: 200px;
 }
 
 
 footer {
-  position: fixed;
   bottom: 0;
   font-size: 20px;
   line-height: 4px;
