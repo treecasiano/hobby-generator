@@ -1,21 +1,23 @@
-var express = require('express');
-var app = express();
-var hobbyGenerator = require ('./lib/hobbies');
+'use strict';
 
-var server = app.listen(process.env.PORT || 3000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+const express = require('express');
+const app = express();
+const hobbyGenerator = require('./lib/hobbies');
 
-  console.log('App listening at http://%s:%s', host, port);
+const server = app.listen(process.env.PORT || 3000, () => {
+    const host = server.address().address;
+    const port = server.address().port;
+
+    console.log('App listening at http://%s:%s', host, port);
 });
 
 app.use(express.static('app'));
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post( '/hobbies', function( req, res) {
-  var output = hobbyGenerator();
-  res.json( { hobbies: output } );
+app.post('/hobbies', (req, res) => {
+    let output = hobbyGenerator();
+    res.json({hobbies: output});
 });
