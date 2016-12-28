@@ -2,11 +2,28 @@
 
 /* global React ReactDOM*/
 
+class HobbyDisplay extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            value: "CLICK BUTTON TO GENERATE A HOBBY",
+        };
+    }
+
+    render() {
+        return (
+            <div id="hobbyText" className="hobbyDisplay">
+                {this.state.value}
+            </div>
+        );
+    }
+}
+
 class GeneratorButton extends React.Component {
     constructor() {
         super();
         this.state = {
-            value: "CLICK TO GENERATE A HOBBY",
+            value: "CLICK ME",
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -19,19 +36,18 @@ class GeneratorButton extends React.Component {
             const OK = 200; // status 200 is a successful return
             if (xhr.readyState === DONE) {
                 if (xhr.status === OK && xhr.status < 300) {
-                    let responseObj = JSON.parse(xhr.responseText);
-                    this.setState({value:responseObj.hobbies});
+                    // let responseObj = JSON.parse(xhr.responseText);
+                    // this.setState({value:responseObj.hobbies});
                 } else {
                     console.log('Error: ' + xhr.status); // An error occurred during the request.
                 }
             }
         };
     }
-
     
     render() {
         return (
-            <button id="hobbies" type="button" className="generator"  onClick={this.handleClick}>
+            <button id="hobbies" type="button" className="generatorButton"  onClick={this.handleClick}>
                 {this.state.value}
             </button>
         );
@@ -46,6 +62,7 @@ ReactDOM.render(
 
         <p>Let the Hobby Generator suggest one or several of the myriad ways you can spend your fleeting, finite time on this
         terrible, beautiful planet!</p>
+        <HobbyDisplay />
         <GeneratorButton />
         <br />
         <br />

@@ -26,19 +26,39 @@ a:hover {
     -webkit-text-fill-color: transparent;
 }
 
-.generator {
+.hobbyDisplay {
     background: linear-gradient(90deg, yellowgreen, orchid, turquoise, lightyellow);
     border-radius: 15px;
     border: 5px white;
     color: black;
     font-size: 24px;
     font-weight: bold;
-    margin-top: 20px;
+    margin: 20px auto auto;
     min-height: 200px;
     outline: none;
     padding: 15px;
     text-align: center;
     width: 80%;
+}
+
+.generatorButton {
+    background: orchid;
+    border-radius: 15px;
+    border: 5px white;
+    color: black;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 20px;
+    height: 50px;
+    outline: none;
+    padding: 15px;
+    text-align: center;
+    width: 100px;
+}
+
+.generatorButton:hover {
+    background: turquoise;
 }
 
 .main-footer {
