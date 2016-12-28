@@ -12,6 +12,7 @@ const server = app.listen(process.env.PORT || 3000, () => {
 });
 
 app.use(express.static('app'));
+app.use(express.static('static'));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
