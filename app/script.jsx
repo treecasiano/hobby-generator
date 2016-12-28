@@ -1,13 +1,17 @@
 'use strict';
 
-class Generator extends React.Component {
-      constructor() {
-            super();
-            this.state = {value: "CLICK TO GENERATE A HOBBY"};
-        }
-    render() {
-        return (
-            <button id="hobbies" class="hobby-button" type="button" className="generator"  onClick={() =>{let xhr = new XMLHttpRequest();
+/* global React ReactDOM*/
+
+class GeneratorButton extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            value: "CLICK TO GENERATE A HOBBY",
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick () {
+        let xhr = new XMLHttpRequest();
         xhr.open('POST', 'hobbies');
         xhr.send(null);
         xhr.onreadystatechange = () => {
@@ -21,7 +25,13 @@ class Generator extends React.Component {
                     console.log('Error: ' + xhr.status); // An error occurred during the request.
                 }
             }
-        };}}>
+        };
+    }
+
+    
+    render() {
+        return (
+            <button id="hobbies" type="button" className="generator"  onClick={this.handleClick}>
                 {this.state.value}
             </button>
         );
@@ -30,19 +40,19 @@ class Generator extends React.Component {
 
 ReactDOM.render(
     <div>
-        <h1 class="page-header">Hobby Generator</h1>
+        <h1 className="page-header">Hobby Generator</h1>
         <p>Not sure what to do with your free time? Don't let your lack of imagination thwart your ability to lead a rich and
         interesting life.</p>
 
         <p>Let the Hobby Generator suggest one or several of the myriad ways you can spend your fleeting, finite time on this
         terrible, beautiful planet!</p>
-        <Generator />
+        <GeneratorButton />
         <br />
         <br />
-        <footer class="main-footer">
+        <footer className="main-footer">
             <p>&copy; <a href="http://treecasiano.com">Tree Casiano</a> 2015</p>
             <p>View <a href="https://github.com/treecasiano/hobby-generator">this code on GitHub!</a></p>
         </footer>
     </div>,
-  document.getElementById('app')
+    document.getElementById('app')
 );
