@@ -2,6 +2,53 @@
 
 /* global React ReactDOM*/
 
+
+function getHobbiesList(url) {
+    // Return a new promise.
+    return new Promise(function(resolve, reject) {
+        // Do the usual XHR stuff
+        let req = new XMLHttpRequest();
+        req.open('POST', url);
+
+        req.onload = function() {
+            // This is called even on 404 etc
+            // so check the status
+            if (req.status == 200) {
+                // Resolve the promise with the response text
+                resolve(req.response);
+            }
+            else {
+                // Otherwise reject with the status text
+                // which will hopefully be a meaningful error
+                reject(Error(req.statusText));
+            }
+        };
+
+        // Handle network errors
+        req.onerror = function() {
+            reject(Error("Network Error"));
+        };
+
+        // Make the request
+        req.send();
+    });
+}
+
+
+let hobbiesList = [];
+let tempHobbiesList = [];
+
+getHobbiesList('/hobbies')
+    .then((response) => {
+        // console.log('Success!', response);
+        let data = JSON.parse(response);
+        hobbiesList = data.hobbies;
+        tempHobbiesList = hobbiesList.slice(0);
+    }, error => {
+        console.log('Failed!', error);
+    });
+
+
 class HobbyDisplay extends React.Component {
     constructor() {
         super();
@@ -27,22 +74,12 @@ class GeneratorButton extends React.Component {
         };
         this.handleClick = this.handleClick.bind(this);
     }
+
     handleClick () {
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'hobbies');
-        xhr.send(null);
-        xhr.onreadystatechange = () => {
-            const DONE = 4; // readyState 4 means the request is done
-            const OK = 200; // status 200 is a successful return
-            if (xhr.readyState === DONE) {
-                if (xhr.status === OK && xhr.status < 300) {
-                    // let responseObj = JSON.parse(xhr.responseText);
-                    // this.setState({value:responseObj.hobbies});
-                } else {
-                    console.log('Error: ' + xhr.status); // An error occurred during the request.
-                }
-            }
-        };
+
+        let randomHobby = randomize(tempHobbiesList, hobbiesList);
+
+        this.setState({value:randomHobby});
     }
     
     render() {
@@ -53,6 +90,20 @@ class GeneratorButton extends React.Component {
         );
     }
 }
+
+function randomize() {
+    let hobby = tempHobbiesList[Math.floor(Math.random()*tempHobbiesList.length)];
+    let index = tempHobbiesList.indexOf(hobby);
+    if (index > -1) {
+        tempHobbiesList.splice(index, 1);
+    } else {
+        // starts the list over
+        tempHobbiesList = hobbiesList.slice(0);
+        return "RESTARTING THE LIST";
+    }
+    return hobby;
+}
+
 
 ReactDOM.render(
     <div>
