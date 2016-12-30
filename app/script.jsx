@@ -1,103 +1,100 @@
 'use strict';
 
-/* global React ReactDOM*/
+/* global React ReactDOM */
 
+class HobbyGenerator extends React.Component {
 
-function getHobbiesList(url) {
-    // Return a new promise.
-    return new Promise(function(resolve, reject) {
-        // Do the usual XHR stuff
-        let req = new XMLHttpRequest();
-        req.open('POST', url);
+    constructor(props) {
 
-        req.onload = function() {
-            // This is called even on 404 etc
-            // so check the status
-            if (req.status == 200) {
-                // Resolve the promise with the response text
-                resolve(req.response);
-            }
-            else {
-                // Otherwise reject with the status text
-                // which will hopefully be a meaningful error
-                reject(Error(req.statusText));
-            }
-        };
+        super(props);
 
-        // Handle network errors
-        req.onerror = function() {
-            reject(Error("Network Error"));
-        };
+        this.hobbiesList = [];
 
-        // Make the request
-        req.send();
-    });
-}
-
-
-let hobbiesList = [];
-let tempHobbiesList = [];
-
-getHobbiesList('/hobbies')
-    .then((response) => {
-        // console.log('Success!', response);
-        let data = JSON.parse(response);
-        hobbiesList = data.hobbies;
-        tempHobbiesList = hobbiesList.slice(0);
-    }, error => {
-        console.log('Failed!', error);
-    });
-
-
-class GeneratorButton extends React.Component {
-    constructor() {
-        super();
         this.state = {
-            value: "CLICK TO GENERATE A HOBBY",
-        };
-        this.handleClick = this.handleClick.bind(this);
+            tempHobbiesList: [],
+            currentHobby: 'Click button below to generate a hobby.'
+        }
     }
 
-    handleClick () {
+    handleClick() {
 
-        let randomHobby = randomize(tempHobbiesList, hobbiesList);
-
-        this.setState({value:randomHobby});
+        let currentHobby = this.state.tempHobbiesList[Math.floor(Math.random() * this.state.tempHobbiesList.length)];
+        let index = this.state.tempHobbiesList.indexOf(currentHobby);
+        if (index > -1) {
+            this.state.tempHobbiesList.splice(index, 1);
+            this.setState({currentHobby});
+        } else {
+            // starts the list over
+            let currentHobby = "HOBBY GENERATOR IS EXHAUSTED. CLICK BUTTON TO START OVER.";
+            this.state.tempHobbiesList = this.hobbiesList.slice(0);
+            this.setState({currentHobby});
+        }
     }
 
-    
+    componentDidMount() {
+
+        postRequest('/hobbies')
+            .then((response) => {
+                const data = JSON.parse(response);
+                this.hobbiesList = data.hobbies;
+                this.state.tempHobbiesList = data.hobbies.slice(0);
+            }, error => {
+                console.log('Failed!', error);
+            });
+
+
+        function postRequest(url) {
+
+            return new Promise(function (resolve, reject) {
+                let req = new XMLHttpRequest();
+                req.open('POST', url);
+
+                req.onload = function () {
+
+                    if (req.status == 200) {
+                        resolve(req.response);
+                    }
+                    else {
+                        reject(Error(req.statusText));
+                    }
+                };
+
+                // Handle network errors
+                req.onerror = function () {
+                    reject(Error("Network Error"));
+                };
+
+                // Make the request
+                req.send();
+            });
+        }
+    }
+
     render() {
         return (
-            <button id="hobbies" type="button" className="generator"  onClick={this.handleClick}>
-                {this.state.value}
-            </button>
-        );
+            <div className="hobbyGeneratorContainer">
+                <div id="hobbyText" className="hobbyTextDisplay">
+                    {this.state.currentHobby}
+                </div>
+                <button id="hobbies" type="button" className="generatorButton" onClick={this.handleClick.bind(this)}>
+                    Get Hobby
+                </button>
+            </div>
+        )
     }
 }
-
-function randomize() {
-    let hobby = tempHobbiesList[Math.floor(Math.random()*tempHobbiesList.length)];
-    let index = tempHobbiesList.indexOf(hobby);
-    if (index > -1) {
-        tempHobbiesList.splice(index, 1);
-    } else {
-        // starts the list over
-        tempHobbiesList = hobbiesList.slice(0);
-        return "RESTARTING THE LIST";
-    }
-    return hobby;
-}
-
 
 ReactDOM.render(
     <div>
         <h1 className="page-header">Hobby Generator</h1>
-        <p>Not sure what to do with your free time? Don't let your lack of imagination thwart your ability to lead a rich and
-        interesting life.</p>
+        <p>Not sure what to do with your free time? Don't let your lack of imagination thwart your ability to lead a
+            rich and
+            interesting life.</p>
 
-        <p>Let the Hobby Generator suggest one or several of the myriad ways you can spend your fleeting, finite time on this
-        terrible, beautiful planet!</p>
-        <GeneratorButton />
+        <p>Let the Hobby Generator suggest one or several of the myriad ways you can spend your fleeting, finite time on
+            this
+            terrible, beautiful planet!</p>
+        <HobbyGenerator />
         <br />
         <br />
         <footer className="main-footer">
@@ -107,4 +104,3 @@ ReactDOM.render(
     </div>,
     document.getElementById('app')
 );
-
