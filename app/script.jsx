@@ -1,9 +1,64 @@
 'use strict';
 
-/* global React ReactDOM*/
+/* global React ReactDOM */
 
+let hobbiesList = [];
+let tempHobbiesList = [];
 
-function getHobbiesList(url) {
+postRequest('/hobbies')
+    .then((response) => {
+        // console.log('Success!', response);
+        let data = JSON.parse(response);
+        hobbiesList = data.hobbies;
+        tempHobbiesList = hobbiesList.slice(0);
+    }, error => {
+        console.log('Failed!', error);
+    });
+
+// TODO(Tree): create a stateful component to hold the text display and the button
+
+class HobbyTextDisplay extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            value: "CLICK BUTTON TO GENERATE A HOBBY",
+        };
+    }
+
+    render() {
+        return (
+            <div id="hobbyText" className="hobbyTextDisplay">
+                {this.state.value}
+            </div>
+        );
+    }
+}
+
+class GeneratorButton extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            value: "CLICK ME",
+        };
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        let randomHobby = getRandomHobby();
+        let hobbyText = document.getElementById('hobbyText');
+        hobbyText.innerText = randomHobby;
+    }
+    
+    render() {
+        return (
+            <button id="hobbies" type="button" className="generatorButton"  onClick={this.handleClick}>
+                {this.state.value}
+            </button>
+        );
+    }
+}
+
+function postRequest(url) {
     // Return a new promise.
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
@@ -34,64 +89,7 @@ function getHobbiesList(url) {
     });
 }
 
-
-let hobbiesList = [];
-let tempHobbiesList = [];
-
-getHobbiesList('/hobbies')
-    .then((response) => {
-        // console.log('Success!', response);
-        let data = JSON.parse(response);
-        hobbiesList = data.hobbies;
-        tempHobbiesList = hobbiesList.slice(0);
-    }, error => {
-        console.log('Failed!', error);
-    });
-
-
-class HobbyDisplay extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            value: "CLICK BUTTON TO GENERATE A HOBBY",
-        };
-    }
-
-    render() {
-        return (
-            <div id="hobbyText" className="hobbyDisplay">
-                {this.state.value}
-            </div>
-        );
-    }
-}
-
-class GeneratorButton extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            value: "CLICK ME",
-        };
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick () {
-
-        let randomHobby = randomize(tempHobbiesList, hobbiesList);
-
-        this.setState({value:randomHobby});
-    }
-    
-    render() {
-        return (
-            <button id="hobbies" type="button" className="generatorButton"  onClick={this.handleClick}>
-                {this.state.value}
-            </button>
-        );
-    }
-}
-
-function randomize() {
+function getRandomHobby() {
     let hobby = tempHobbiesList[Math.floor(Math.random()*tempHobbiesList.length)];
     let index = tempHobbiesList.indexOf(hobby);
     if (index > -1) {
@@ -113,7 +111,7 @@ ReactDOM.render(
 
         <p>Let the Hobby Generator suggest one or several of the myriad ways you can spend your fleeting, finite time on this
         terrible, beautiful planet!</p>
-        <HobbyDisplay />
+        <HobbyTextDisplay />
         <GeneratorButton />
         <br />
         <br />
