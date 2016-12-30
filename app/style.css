@@ -2,10 +2,10 @@ body {
     background: black;
     color: white;
     font-family: 'Lato', sans-serif;
-    font-size: 24px;
+    font-size: 18px;
     margin: auto;
     max-width: 600px;
-    padding: 50px;
+    padding: 30px;
     text-align: center;
     width: auto;
 }
@@ -51,6 +51,7 @@ a:hover {
     font-size: 12px;
     font-weight: bold;
     margin-top: 20px;
+    margin-bottom:0;
     height: 50px;
     outline: none;
     padding: 15px;
@@ -62,8 +63,12 @@ a:hover {
     background: turquoise;
 }
 
+.generatorButton:active {
+    background: yellowgreen;
+}
+
 .main-footer {
     bottom: 0;
-    font-size: 20px;
+    font-size: 12px;
     line-height: 4px;
 }
