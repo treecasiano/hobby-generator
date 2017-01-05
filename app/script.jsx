@@ -4,17 +4,62 @@ import ReactDOM from 'react-dom';
 import { Component } from 'react';
 /* global React ReactDOM */
 
+class Todo extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log(props);
+        this.state = {
+            listItems: props.favorites
+        }
+    }
+
+    render() {
+        return (
+            <ul>{this.state.listItems.map((hobby, index) =>
+                <li key={index}>{hobby}</li>
+            )}</ul>
+        );
+    }
+}
+
+class ToDoList extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            addedHobbies: []
+        };
+    }
+    add() {
+        this.state.addedHobbies.push(this.props.hobbies);
+        let addedHobbies = this.state.addedHobbies;
+        console.log(addedHobbies);
+        this.setState({addedHobbies});
+        console.log(this);
+    }
+    render() {
+        return (
+            <div className="hobbyTextDisplay">
+                <button type="button" className="generatorButton" onClick={this.add.bind(this)}>
+                    Add Hobby
+                    </button>
+                <Todo favorites={this.state.addedHobbies} />
+
+            </div>
+        );
+    }
+}
+
 class HobbyGenerator extends React.Component {
 
     constructor(props) {
-
         super(props);
 
         this.hobbiesList = [];
 
         this.state = {
             tempHobbiesList: [],
-            currentHobby: 'Click button below to generate a hobby.'
+            currentHobby: 'Click button below to generate a hobby.',
         }
     }
 
@@ -24,14 +69,15 @@ class HobbyGenerator extends React.Component {
         let index = this.state.tempHobbiesList.indexOf(currentHobby);
         if (index > -1) {
             this.state.tempHobbiesList.splice(index, 1);
-            this.setState({currentHobby});
+            this.setState({ currentHobby });
         } else {
             // starts the list over
             let currentHobby = "HOBBY GENERATOR IS EXHAUSTED. CLICK BUTTON TO START OVER.";
             this.state.tempHobbiesList = this.hobbiesList.slice(0);
-            this.setState({currentHobby});
+            this.setState({ currentHobby });
         }
     }
+
 
     componentDidMount() {
 
@@ -78,9 +124,12 @@ class HobbyGenerator extends React.Component {
                 <div id="hobbyText" className="hobbyTextDisplay">
                     {this.state.currentHobby}
                 </div>
+                <br />
                 <button id="hobbies" type="button" className="generatorButton" onClick={this.handleClick.bind(this)}>
                     Get Hobby
                 </button>
+                <br />
+                <ToDoList hobbies={this.state.currentHobby} />
             </div>
         )
     }
