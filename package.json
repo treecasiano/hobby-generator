@@ -15,7 +15,7 @@
     "react-dom": "^15.4.1"
   },
   "engines": {
-    "node": "0.12.2"
+    "node": "7.5.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
