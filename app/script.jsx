@@ -12,7 +12,7 @@ class HobbyGenerator extends React.Component {
 
         this.state = {
             tempHobbiesList: [],
-            currentHobby: 'Click button below to generate a hobby.'
+            currentHobby: ''
         }
     }
 
@@ -51,7 +51,7 @@ class HobbyGenerator extends React.Component {
 
                 req.onload = function () {
 
-                    if (req.status == 200) {
+                    if (req.status === 200) {
                         resolve(req.response);
                     }
                     else {
@@ -73,12 +73,13 @@ class HobbyGenerator extends React.Component {
     render() {
         return (
             <div className="hobbyGeneratorContainer">
-                <div id="hobbyText" className="hobbyTextDisplay">
-                    {this.state.currentHobby}
-                </div>
                 <button id="hobbies" type="button" className="generatorButton" onClick={this.handleClick.bind(this)}>
                     Get Hobby
                 </button>
+                <div id="hobbyText" className="hobbyTextDisplay">
+                    {this.state.currentHobby}
+                </div>
+
             </div>
         )
     }
