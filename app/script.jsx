@@ -1,5 +1,7 @@
 'use strict';
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Component } from 'react';
 /* global React ReactDOM */
 
 class HobbyGenerator extends React.Component {
